@@ -16,20 +16,17 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Product {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(nullable = false, updatable = false, unique = true, length = 16, columnDefinition = "BINARY(16)")
+    @Column(updatable = false, nullable = false, unique = true, length = 16, columnDefinition = "BINARY(16)")
     private UUID id;
 
     @Column(nullable = false)
-    private String name;
+    private String status;
 
-    @Column(nullable = false)
-    private double price;
-
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<OrderProduct> orderProductList = new ArrayList<>();
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderProduct> orderProducts = new ArrayList<>();
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
@@ -38,9 +35,4 @@ public class Product {
     @UpdateTimestamp
     @Column(nullable = false)
     private LocalDateTime updatedAt;
-
-    public Product(String name, double price) {
-        this.name = name;
-        this.price = price;
-    }
 }
