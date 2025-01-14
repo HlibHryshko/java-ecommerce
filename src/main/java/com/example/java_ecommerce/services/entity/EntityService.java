@@ -15,7 +15,7 @@ public abstract class EntityService<T, ID> {
 
     @Transactional(readOnly = true)
     public T findById(ID id) {
-        return repository.findById(id).get();
+        return repository.findById(id).orElseThrow(() -> new RuntimeException("Entity not found"));
     }
 
     @Transactional(readOnly = true)
