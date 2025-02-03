@@ -23,7 +23,7 @@ public class Order {
     private UUID id;
 
     @Column(nullable = false)
-    private String status;
+    private String status = "In progress";
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderProduct> orderProducts = new ArrayList<>();
