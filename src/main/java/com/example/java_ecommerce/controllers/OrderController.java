@@ -1,20 +1,24 @@
 package com.example.java_ecommerce.controllers;
 
-import com.example.java_ecommerce.services.entity.ProductEntityService;
+import com.example.java_ecommerce.models.dtos.OrderDTO;
+import com.example.java_ecommerce.services.entity.OrderEntityService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class OrderController {
-    private final ProductEntityService productEntityService;
+    private final OrderEntityService orderEntityService;
 
-    public OrderController(ProductEntityService productEntityService) {
-        this.productEntityService = productEntityService;
+    public OrderController(OrderEntityService orderEntityService) {
+        this.orderEntityService = orderEntityService;
     }
 
     @PostMapping("/api/v1/orders")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createOrder() {
+    public OrderDTO.OrderIdRecord createOrder(@RequestBody OrderDTO.CreateOrderRecord orderRecord) {
+        return new OrderDTO.OrderIdRecord(
+                orderEntityService.save(OrderDTO.orderRecordToOrder(orderRecord)).getId()
+        );
 
     }
 
